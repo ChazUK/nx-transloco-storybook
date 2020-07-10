@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "projects": {
+    "transloco-demo": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/transloco-demo",
+      "sourceRoot": "apps/transloco-demo/src",
+      "prefix": "nx-transloco-storybook",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/transloco-demo",
+            "index": "apps/transloco-demo/src/index.html",
+            "main": "apps/transloco-demo/src/main.ts",
+            "polyfills": "apps/transloco-demo/src/polyfills.ts",
+            "tsConfig": "apps/transloco-demo/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/transloco-demo/src/favicon.ico",
+              "apps/transloco-demo/src/assets"
+            ],
+            "styles": ["apps/transloco-demo/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/transloco-demo/src/environments/environment.ts",
+                  "with": "apps/transloco-demo/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "transloco-demo:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "transloco-demo:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "transloco-demo:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/transloco-demo/tsconfig.app.json",
+              "apps/transloco-demo/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/transloco-demo/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/transloco-demo/jest.config.js",
+            "tsConfig": "apps/transloco-demo/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/transloco-demo/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "transloco-demo-e2e": {
+      "root": "apps/transloco-demo-e2e",
+      "sourceRoot": "apps/transloco-demo-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/transloco-demo-e2e/cypress.json",
+            "tsConfig": "apps/transloco-demo-e2e/tsconfig.e2e.json",
+            "devServerTarget": "transloco-demo:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "transloco-demo:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/transloco-demo-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/transloco-demo-e2e/**/*"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "transloco-demo"
+}
