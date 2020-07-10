@@ -28,6 +28,9 @@
     "transloco-demo-e2e": {
       "tags": [],
       "implicitDependencies": ["transloco-demo"]
+    },
+    "ui": {
+      "tags": []
     }
   }
 }
