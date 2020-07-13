@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import { scopeLoader } from 'scoped-translations';
 
 @Component({
   selector: 'nx-transloco-storybook-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  providers: [
+    {
+      provide: TRANSLOCO_SCOPE,
+      useValue: {
+        scope: 'card',
+        loader: scopeLoader((lang, root) => import(`./${root}/${lang}.json`)),
+      },
+    },
+  ],
 })
-export class CardComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class CardComponent {}
