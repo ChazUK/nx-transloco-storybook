@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
-import { scopeLoader } from '../../../../../scoped-translations';
+import { scopeLoader } from 'scoped-translations';
 
 @Component({
   selector: 'nx-transloco-storybook-button',
-  templateUrl: './button.component.html',
+  template: `
+    <ng-template transloco let-t>
+      <button>Button Text: {{ t('button.title') }}</button>
+    </ng-template>
+  `,
   providers: [
     {
       provide: TRANSLOCO_SCOPE,
